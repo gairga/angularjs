@@ -1,0 +1,33 @@
+<form action="" name="cancelMWTransaction" id="cancelMWTransaction" class="form-horizontal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="row">
+        <div class="col-xs-12">
+          <h4 data-translate="1305">Cancel Approved Transaction?</h4>
+        </div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-12">
+            <span data-translate="1306">This transaction has already been approved and the card is already charged!</span><br/>
+            <span data-translate="1307">Are you sure you want to cancel it?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="container-fluid">
+        <div class="row">
+          <button id="returnToTransactionOptionButton" type="button" class="btn btn-lg btn-default" ng-click="closeForm()">
+            <span data-translate="1.6">No</span>
+          </button>
+          <button id="cancelTransactionOptionButton" type="button" class="btn btn-lg btn-default" ng-click="closeForm('cancel')">
+            <span data-translate="1.5">Yes</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

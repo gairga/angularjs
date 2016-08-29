@@ -1,0 +1,510 @@
+<form name="employeeSearchForm">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4>Formas de Pagos</h4>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="search">TIPOS DE PAGOS</label>
+                        <div class="form-group">
+                             <button ng-click="Mostrar()">Mostrar</button>
+                        </div>                             
+                        <div ng-show="muestra === 5">
+                            <li ng-repeat="photo in photos">
+                                <h2>{{ photo.title }}</h2>
+                                <p>"{{ photo.body }}"></p>
+                            
+                            </li>
+                        </div>
+                        
+            
+                        <div class="form-group">
+                            <button type="button" class="btn btn-lg btn-success" ng-click="ButtonEfectivo()">Efectivo</button>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-lg btn-success" ng-click="ButtonCheque()">Cheque</button>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-lg btn-success" ng-click="ButtonDebito()">Debito</button>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-lg btn-success" ng-click="ButtonCredito()">Credito</button>
+                        </div>
+                    </div>
+            <ng-form action="" autocomplete="off" name="tenderDialogueForm" id="tenderDialogueForm" class="form-horizontal">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-5">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="well well-sm">
+                            <h4 ng-class="{'text-danger':showTake, 'text-success':showGive, 'text-muted':showBalanced}">{{tender.mode}} <span data-translate="1479">Due:</span> <span id="dueAmountSpan" class="">{{display_amt_due|currency}}</span></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default" ng-if="noTender">
+                  <div class="panel-heading">
+                    Invalid Tender
+                  </div>
+                  <div class="panel-body">
+                      <em><strong>Please select a valid tender using the tender button below.</strong></em>
+                  </div>
+                </div>
+                <div class="panel panel-default" ng-if="!noTender">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-12 text-right">
+                                <h4 class="pull-left">{{tender.mode}} {{(tenderName==='COD')?codName:tenderName}}</h4>
+                                <button event-name="posTenderTake" type="button" id="takeButton" class="btn btn-lg btn-success pull-right" ng-disabled="!tender.amount||!tenderDialogueForm.$valid||!enableTakeButton" ng-show="showTake" ng-click="addTender()"><span data-translate="1481">Take</span></button>
+                                <button event-name="posTenderGive" ng-disabled="!tender.amount||!tenderDialogueForm.$valid" type="button" id="giveButton" class="btn btn-lg btn-warning pull-right" ng-show="showGive" ng-click="addTender()"><span data-translate="1482">Give</span></button>
+                                <button event-name="posTenderTake" ng-disabled="!tender.amount||!enableTakeButton" type="button" id="noTenderActionButton" class="btn btn-lg btn-default pull-right" ng-show="showBalanced" ng-click="addTender()"><span data-translate="1481">Take</span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                                       
+                        <div ng-show="tipopago === 1">
+                            <!-- Cash -->                              
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label">
+                                    {{tender.mode}} <span data-translate="982">Amount:</span>
+                                </label>
+                                <div class="col-xs-7">
+                                  <input type="tel" id="Cash" tabindex="1" class="form-control text-right" data-currency-formatter="" numberonly="" ng-focuser="focusMe.Cash" ng-model="tender.amount" ng-blur="amtUpdate()" ng-disabled="cashButtonsDisabled">
+                                  <em style="color:red">{{oTenderFlag}}</em>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="row">
+                                        <div class="col-xs-3 text-center">
+                                            <button tabindex="2" type="button" class="btn btn-info cashBtnSm" ng-click="addToAmount(1)">$1.000
+                                            </button> 
+                                        </div>
+                                        <div class="col-xs-3 text-center">
+                                            <button tabindex="3" type="button" class="btn btn-info cashBtnSm" ng-click="addToAmount(5)">$5.000
+                                            </button> 
+                                        </div>
+                                        <div class="col-xs-3 text-center">
+                                            <button tabindex="4" type="button" class="btn btn-info cashBtnSm" ng-click="addToAmount(10)">$10.000
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="activeTenderType === 2">
+                            <!-- Credit Cards -->
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label">
+                                    {{tender.mode}} <span data-translate="982">Amount:</span>
+                                </label>
+                                <div class="col-xs-7">
+                                    <input tabindex="1" type="tel" id="CreditCard" class="form-control text-right" data-currency-formatter="" numberonly="" ng-focuser="focusMe.CreditCard" ng-blur="amtUpdate()" ng-model="tender.amount">
+                                  <em style="color:red">{{oTenderFlag}}</em>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="sideBySide">
+                                <label class="col-xs-5 control-label">
+                                    <span data-translate="925">Card Type:</span>
+                                </label>
+                                <div class="col-xs-7">
+                                    <select id="creditType" tabindex="3" class="form-control" ng-required="isFieldRequired('CARD_TYPE','credit_card')" ng-model="tender.creditType" ng-options="cctype.sid as cctype.name for cctype in creditCardTypes"><option value="" style="display:none" data-translate="1358">Select...</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="tipopago === 4">
+                            <!-- Debit Card -->
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label">
+                                    {{tender.mode}} <span data-translate="982">Amount:</span>
+                                </label>
+                                <div class="col-xs-7">
+                                    <input tabindex="1" type="tel" id="Tenderamount-Debit" class="form-control text-right" data-currency-formatter="" numberonly="" ng-focuser="focusMe.Debit" ng-blur="amtUpdate()" ng-model="tender.amount">
+                                  <em style="color:red">{{oTenderFlag}}</em>
+                                </div>
+                            </div>
+                            <!--<div class="form-group" ng-hide="tender.mode == 'Give'">
+                                <label class="col-xs-5 control-label" data-translate="924">Cashback:</label>
+                                <div class="col-xs-7">
+                                    <input tabindex="2" type="tel" id="debitCashBack" class="form-control text-right" data-currency-formatter numberonly ng-model="tender.debitCashBack" />
+                                </div>
+                            </div>-->
+                            <div class="row">
+                                <div class="col-xs-5 text-right">
+                                    <p class="form-control-static">
+                                        <strong data-translate="926">Authorization No:</strong>
+                                    </p>
+                                </div>
+                                <div class="col-xs-7">
+                                    <input tabindex="3" ng-required="isFieldRequired('AUTHORIZATION_CODE','debit_card')" type="text" id="debitAuth" class="form-control text-right" ng-focuser="focusMe.debitAuth" ng-model="tender.debitAuth">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-show="tipopago === 2">
+                            <!-- Checks -->
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label">
+                                    {{tender.mode}} <span>Nombre Cliente:</span>
+                                </label>
+                                <div class="col-xs-7">
+                                    <input tabindex="1" type="tel" id="Check" class="form-control text-right" data-currency-formatter="" numberonly="" ng-focuser="focusMe.Check" ng-blur="amtUpdate()" ng-model="tender.amount">
+                                  <em style="color:red">{{oTenderFlag}}</em>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label">RUT No:</label>
+                                <div class="col-xs-7">
+                                    <input tabindex="2" type="tel" id="checkNumber" class="form-control text-right" ng-focuser="focusMe.checkNumber" ng-model="tender.checkNumber">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label">Monto:</label>
+                                <div class="col-xs-7">
+                                    <input tabindex="2" type="tel" id="checkNumber" class="form-control text-right" ng-focuser="focusMe.checkNumber" ng-model="tender.checkNumber">
+                                </div>
+                            </div>                            
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label">Fecha:</label>
+                                <div class="col-xs-7">
+                                    <input tabindex="2" type="tel" id="checkNumber" class="form-control text-right" ng-focuser="focusMe.checkNumber" ng-model="tender.checkNumber">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-5 text-right">
+                                    <p class="form-control-static">
+                                        <strong>Banco:</strong>
+                                    </p>
+                                </div>
+                                <div class="col-xs-7">
+                                    <select id="creditType" tabindex="2" class="form-control" ng-required="isFieldRequired('CARD_TYPE','credit_card')" ng-model="tender.creditType" ng-options="cctype.sid as cctype.name for cctype in creditCardTypes"><option value="" style="display:none" data-translate="1358">Select...</option></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="activeTenderType === 5">
+                            <!-- Store Credit -->
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label">{{tender.mode}} <span data-translate="982">Amount:</span></label>
+                                <div class="col-xs-7">
+                                    <input tabindex="1" type="tel" id="StoreCredit" class="form-control text-right" data-currency-formatter="" numberonly="" ng-focuser="focusMe.StoreCredit" ng-blur="amtUpdate()" ng-model="tender.amount">
+                                  <em style="color:red">{{oTenderFlag}}</em>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label" data-translate="1456">Customer Name:</label>
+                                <div class="col-xs-7">
+                                    <input tabindex="2" type="text" class="form-control" ng-readonly="true" ng-model="customerName ">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label" data-translate="750">Customer ID:</label>
+                                <div class="col-xs-7">
+                                    <input tabindex="3" type="text" class="form-control" ng-readonly="true" ng-model="customerId">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-5 text-right">
+                                    <p class="form-control-static">
+                                        <strong data-translate="939">Available Store Credit:</strong>
+                                    </p>
+                                </div>
+                                <div class="col-xs-7">
+                                    <input tabindex="4" type="text" class="form-control" ng-readonly="true" data-currency-formatter="" numberonly="" ng-model="customerStoreCredit">
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="activeTenderType === 7">
+                            <!-- Deposits -->
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label">{{tender.mode}} <span data-translate="982">Amount:</span></label>
+                                <div class="col-xs-7">
+                                    <input tabindex="1" type="tel" id="Deposit" class="form-control text-right" data-currency-formatter="" numberonly="" ng-focuser="focusMe.Deposit" ng-model="tender.amount">
+                                  <em style="color:red">{{oTenderFlag}}</em>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-5 text-right">
+                                    <p class="form-control-static">
+                                        <strong data-translate="940">Available Deposit:</strong>
+                                    </p>
+                                </div>
+                                <div class="col-xs-7">
+                                    <input tabindex="2" type="text" id="availableDeposit" class="form-control text-right" data-currency-formatter="" numberonly="" ng-model="availableDeposit" ng-blur="amtUpdate()" ng-readonly="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="activeTenderType === 12">
+                            <!-- Foreign Currency -->
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label" data-translate="941">Foreign Currency:</label>
+                                <div class="col-xs-7">
+                                    <select id="currencyType" tabindex="5" class="form-control" ng-change="loadForeignCurrency()" ng-model="tender.currencyType" ng-options="c.sid as c.currency_name for c in currencyList"><option value="" style="display:none" data-translate="1358">Select...</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label" data-translate="942">Foreign Due:</label>
+                                <div class="col-xs-7">
+                                    <input tabindex="1" type="text" id="foreigncurrencyForeignDue" foreign-currency-formatter="activeFC" class="form-control text-right" ng-readonly="true" display-positive="display-positive" ng-blur="amtUpdate()" ng-model="tender.foreigncurrencyTakeAmount">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label">{{tender.mode}} <span data-translate="982">Amount:</span>
+
+                                </label>
+                                <div class="col-xs-7">
+                                    <input tabindex="6" type="text" id="ForeignCurrency" numberonly="" foreign-currency-formatter="activeFC" name="ForeignCurrency" class="form-control text-right" ng-focuser="focusMe.ForeignCurrency" display-positive="display-positive" ng-model="tender.amount">
+                                  <em style="color:red">{{oTenderFlag}}</em>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label" data-translate="943">Base Currency:</label>
+                                <div class="col-xs-7">
+                                    <input type="text" id="foreigncurrencyBaseCurrency" class="form-control text-right" ng-readonly="true" ng-model="baseCurrencyName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label">{{tender.mode}} <span data-translate="1480">Rate:</span></label>
+                                <div class="col-xs-7">
+                                    <input tabindex="2" type="text" id="foreigncurrencyTakeRate" class="form-control text-right" ng-readonly="true" ng-model="tender.foreigncurrencyRate">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-5 text-right">
+                                    <p class="form-control-static">
+                                        <strong>Base {{tender.mode}}
+                                            <span data-translate="982">Amount:</span>
+                                        </strong>
+                                    </p>
+                                </div>
+                                <div class="col-xs-7">
+                                    <input tabindex="3" type="text" id="foreigncurrencyBaseTakeAmount" class="form-control text-right" ng-readonly="true" ng-model="tender.foreigncurrencyBaseTakeAmount">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-show="tipopago === 3">
+                            <!-- Central Credit -->
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label">
+                                    {{tender.mode}} <span data-translate="982">Amount:</span>
+                                    <div>
+                                        (<em data-translate="3270">max.</em> {{purchaseLimit | currency}})
+                                    </div>
+                                </label>
+                                <div class="col-xs-7" ng-if="tender.mode !== 'Take'">
+                                    <input type="tel" ng-if="purchaseLimit!==0" tabindex="1" id="CentralCredit1" max="{{purchaseLimit}}" name="CentralCredit" class="form-control text-right" data-currency-formatter="" numberonly="" ng-focuser="focusMe.CentralCredit" ng-blur="amtUpdate()" ng-model="tender.amount">
+                                    <input type="tel" ng-if="purchaseLimit===0" tabindex="1" id="CentralCredit2" name="CentralCredit" class="form-control text-right" data-currency-formatter="" numberonly="" ng-focuser="focusMe.CentralCredit" ng-blur="amtUpdate()" ng-model="tender.amount">
+                                  <em style="color:red">{{oTenderFlag}}</em>
+                                </div>
+                                <div class="col-xs-7" ng-if="tender.mode === 'Take'">
+                                    <input type="tel" tabindex="1" id="CentralCredit3" name="CentralCredit" class="form-control text-right" data-currency-formatter="" numberonly="" ng-focuser="focusMe.CentralCredit" ng-blur="amtUpdate()" ng-model="tender.amount">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label">
+                                    <span data-translate="751">Customer Name</span>
+                                </label>
+                                <div class="col-xs-7">
+                                    <input type="text" tabindex="2" id="centralCustomerName" name="centralCustomerName" class="form-control text-right" ng-disabled="true" ng-model="document.full_name">
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="tender.mode === 'Take'">
+                                <label class="col-xs-5 control-label">
+                                    <span data-translate="3010">Store Credit ID</span>
+                                </label>
+                                <div class="col-xs-7">
+                                    <input type="text" tabindex="2" id="centralCustomerID" name="centralCustomerID" class="form-control text-right" ng-model="tender.creditID">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-5 control-label">
+                                    <span data-translate="932">Balance</span>
+                                </label>
+                                <div class="col-xs-7">
+                                    <input type="tel" id="centralCreditBalance" name="centralCreditBalance" class="form-control text-right" data-currency-formatter="" numberonly="" ng-model="customerStoreCredit" ng-readonly="true" ng-disabled="true">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4 col-xs-offset-4 text-center">
+                                    <button event-name="posStoreCreditBalance" type="button" id="getStoreCreditBalanceButton" class="btn btn-info" data-permission="CheckCentralCreditBal" ng-click="centralCreditTransaction('balance')"><span data-translate="932">Balance</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-1"></div>
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span data-translate="1483">Payments:</span>
+                    </div>
+                    <div class="panel-body SmallResultsPane">
+                        <div class="list-group">
+                            <a id="takenTender{{$index}}" index="{{$index}}" class="list-group-item" ng-repeat="thisTransactionTender in takenTenders">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                      <button event-name="posTenderVoidPayment" id="voidTakeTender{{$index}}" data-permission="allowvoidtender" type="button" class="btn btn-danger" ng-disabled="!enableVoidButton" permission-disabled="disableThisTender(thisTransactionTender.tender_type)" ng-click="voidTender(thisTransactionTender.sid,$index,'Take')"><span data-translate="1486">Void</span></button>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <span class="form-control-static">
+                                            <span ng-hide="thisTransactionTender.tender_type === 12 || thisTransactionTender.tender_type === 3 || thisTransactionTender.tender_type === 2 || thisTransactionTender.tender_type === 17 || thisTransactionTender.tender_type === 4">
+                                                {{thisTransactionTender.tender_name}} {{thisTransactionTender.card_number}}
+                                            </span>
+                                            <span ng-show="thisTransactionTender.tender_type === 4">
+                                              {{thisTransactionTender.tender_name}}&nbsp;&nbsp;&nbsp;&nbsp;
+                                              <span ng-show="thisTransactionTender.charge_discount_percent">{{thisTransactionTender.charge_discount_percent}}%</span>
+                                              <span ng-show="thisTransactionTender.charge_discount_percent&&thisTransactionTender.charge_discount_days"> - </span>
+                                              <span ng-show="thisTransactionTender.charge_discount_days">{{thisTransactionTender.charge_discount_days}} <span data-translate="3836">Days</span></span>
+                                              <span ng-show="(thisTransactionTender.charge_discount_percent||thisTransactionTender.charge_discount_days)&&thisTransactionTender.charge_net_days"> - </span>
+                                              <span ng-show="thisTransactionTender.charge_net_days"><span data-translate="4008">NET</span> {{thisTransactionTender.charge_net_days}}</span>
+                                            </span>
+                                            <span ng-show="thisTransactionTender.tender_type === 3">
+                                                {{codName}}
+                                            </span>
+                                            <span ng-show="thisTransactionTender.tender_type === 2">
+                                                <span ng-show="thisTransactionTender.card_type_name.length > 0">
+                                                    {{thisTransactionTender.card_type_name}}
+                                                </span>
+                                                <span ng-show="thisTransactionTender.card_type_name.length === 0">
+                                                    {{thisTransactionTender.tender_name}}
+                                                </span>
+                                                 {{thisTransactionTender.card_number}}
+                                            </span>
+                                            <span ng-show="thisTransactionTender.tender_type === 15">
+                                                &nbsp;<span data-translate="3032">Redeemed</span> {{thisTransactionTender.central_card_number | cardMask}} for {{thisTransactionTender.taken|currency}}
+                                            </span>
+                                            <span ng-show="thisTransactionTender.tender_type === 17">
+                                                <span>
+                                                Store Credit{{thisTransactionTender.card_number}}
+                                                </span>
+                                                <span ng-show="thisTransactionTender.redeem_credit_id && thisTransactionTender.new_credit_id">
+                                                    &nbsp;<span data-translate="3032">Redeemed</span> {{thisTransactionTender.redeem_credit_id}} for {{thisTransactionTender.new_credit_value + thisTransactionTender.taken|currency}}
+                                                </span>
+                                                <span ng-show="thisTransactionTender.redeem_credit_id && !thisTransactionTender.new_credit_id">
+                                                    &nbsp;<span data-translate="3032">Redeemed</span> {{thisTransactionTender.redeem_credit_id}} for {{thisTransactionTender.taken|currency}}
+                                                </span>
+                                                <span ng-show="thisTransactionTender.new_credit_id">
+                                                    <br><span data-translate="3033">Issued</span> {{thisTransactionTender.new_credit_id}} for {{thisTransactionTender.new_credit_value|currency}}
+                                                </span>
+                                            </span>
+                                            <span ng-show="(thisTransactionTender.tender_type === 1 || thisTransactionTender.tender_type === 2 || thisTransactionTender.tender_type === 10 || thisTransactionTender.tender_type === 11) && thisTransactionTender.authorization_code">
+                                                   <br><span data-translate="1484">Auth No:</span> {{thisTransactionTender.authorization_code}}
+                                            </span>
+                                            <span ng-show="thisTransactionTender.tender_type === 10 && thisTransactionTender.balance"><br><span data-translate="932">Balance</span>: {{thisTransactionTender.balance|currency}}</span>
+                                            <span ng-show="thisTransactionTender.tender_type === 15 && thisTransactionTender.central_credit_balance"><br><span data-translate="932">Balance</span>: {{thisTransactionTender.central_credit_balance|currency}}</span>
+                                            <span ng-show="thisTransactionTender.tender_type === 12">
+                                                {{thisTransactionTender.foreign_currency_name}}: {{thisTransactionTender.base_taken}}
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-3 text-right">
+                                        <p class="form-control-static">
+                                            {{thisTransactionTender.taken|currency}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span data-translate="1485">Change:</span>
+                    </div>
+                    <div class="panel-body SmallResultsPane">
+                        <div class="list-group">
+                            <a id="givenTender{{$index}}" index="{{$index}}" class="list-group-item" ng-repeat="thisTransactionTender in givenTenders">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                      <button event-name="posTenderVoidChange" id="voidGiveTender{{$index}}" class="btn btn-danger" type="button" data-permission="allowvoidtender" ng-disabled="!enableVoidButton" permission-disabled="disableThisTender(thisTransactionTender.tender_type)" ng-click="voidTender(thisTransactionTender.sid, $index, 'Give')"><span data-translate="1486">Void</span></button>
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <span class="form-control-static">
+                                            <span ng-hide="thisTransactionTender.tender_type === 12 || thisTransactionTender.tender_type === 3 || thisTransactionTender.tender_type === 2 || thisTransactionTender.tender_type === 17">
+                                                {{thisTransactionTender.tender_name}}<span ng-show="thisTransactionTender.card_number"> {{thisTransactionTender.card_number}}</span>
+                                            </span>
+                                            <span ng-show="thisTransactionTender.tender_type === 2">
+                                                <span ng-show="thisTransactionTender.card_type_name.length > 0">
+                                                    {{thisTransactionTender.card_type_name}}
+                                                </span>
+                                                <span ng-show="thisTransactionTender.card_type_name.length === 0">
+                                                    {{thisTransactionTender.tender_name}}
+                                                </span>
+                                                 {{thisTransactionTender.card_number}}
+                                            </span>
+                                            <span ng-show="thisTransactionTender.tender_type === 3">
+                                                {{codName}}
+                                            </span>
+                                            <span ng-show="thisTransactionTender.tender_type === 17">
+                                                <span>
+                                                    Store Credit<span ng-show="thisTransactionTender.card_number"> {{thisTransactionTender.card_number}}</span>
+                                                </span>
+                                                <span ng-show="thisTransactionTender.redeem_credit_id && thisTransactionTender.new_credit_id">
+                                                    &nbsp;<span data-translate="3032">Redeemed</span> {{thisTransactionTender.redeem_credit_id}} for {{thisTransactionTender.new_credit_value + thisTransactionTender.given|currency}}
+                                                </span>
+                                                <span ng-show="thisTransactionTender.redeem_credit_id && !thisTransactionTender.new_credit_id">
+                                                    &nbsp;<span data-translate="3032">Redeemed</span> {{thisTransactionTender.redeem_credit_id}} for {{thisTransactionTender.given|currency}}
+                                                </span>
+                                                <span ng-show="thisTransactionTender.new_credit_id">
+                                                    &nbsp;<span data-translate="3033">Issued</span> {{thisTransactionTender.new_credit_id}} for {{thisTransactionTender.new_credit_value|currency}}
+                                                </span>
+                                            </span>
+                                            <span ng-show="thisTransactionTender.tender_type === 15">
+                                                <br><span data-translate="3033">Issued</span> {{thisTransactionTender.central_card_number | cardMask}} for {{thisTransactionTender.given|currency}}
+                                            </span>
+                                            <span ng-show="(thisTransactionTender.tender_type === 1 || thisTransactionTender.tender_type === 2 || thisTransactionTender.tender_type === 10 || thisTransactionTender.tender_type === 11) && thisTransactionTender.authorization_code">
+                                                   <br><span data-translate="1484">Auth No:</span> {{thisTransactionTender.authorization_code}}
+                                            </span>
+                                            <span ng-show="thisTransactionTender.tender_type === 10 && thisTransactionTender.balance"><br><span data-translate="932">Balance</span>: {{thisTransactionTender.balance|currency}}</span>
+                                            <span ng-show="thisTransactionTender.tender_type === 15 && thisTransactionTender.central_credit_balance"><br><span data-translate="932">Balance</span>: {{thisTransactionTender.central_credit_balance|currency}}</span>
+                                            <span ng-show="thisTransactionTender.tender_type === 12">
+                                                {{thisTransactionTender.foreign_currency_name}}:
+                                                   {{thisTransactionTender.base_given}}
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-5 text-right">
+                                        <p class="form-control-static">
+                                            {{thisTransactionTender.given|currency}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+     
+
+         
+            </div>
+        </div>
+        <div ng-include="templates.pos.navigation.pos_tender_buttons()"></div>
+    </div>
+</ng-form>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="button" class="btn btn-lg btn-default" ng-click="$close()">Close</button> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

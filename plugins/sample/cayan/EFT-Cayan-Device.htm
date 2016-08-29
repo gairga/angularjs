@@ -1,0 +1,39 @@
+<form action="" name="mwGeniusDevice" id="mwGeniusDevice" autocomplete="off" class="form-horizontal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="row">
+        <div class="col-xs-12">
+          <h4>Cayan</h4>
+        </div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row" ng-show="deviceInitialized"> <!-- Show DIV if deviceInitialized is true -->
+          <h4 data-translate="1940">Waiting On Customer</h4>
+          <p data-translate="1941">Please wait for the customer to complete the transaction using the card reader/pinpad.</p>
+        </div>
+        <div class="row" ng-show="!deviceInitialized"> <!-- Show DIV if deviceInitialized is not true -->
+          <h4 data-translate="3353">Waiting On Device</h4>
+          <p data-translate="3354">Please wait for the Customer Engagement Device to complete initialization.</p>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <div class="container-fluid">
+        <div class="row">
+          <button id="mwKeyedButton" type="button" class="btn btn-lg btn-default" ng-disabled="!deviceInitialized" ng-show="showKeyedEntry" ng-click="keyedEntry()">
+            <span data-translate="3643">Keyed Entry</span>
+          </button>
+          <button id="bypassButton" type="button" class="btn btn-lg btn-default" ng-disabled="!deviceInitialized" ng-hide="bypassDeviceDisabled" ng-click="abortCED(true)" data-translate="1942">
+            Bypass Device
+          </button>
+          <button id="cancelButton" type="button" class="btn btn-lg btn-default" ng-disabled="!deviceInitialized" ng-click="abortCED()" data-translate="1.2">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

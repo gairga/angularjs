@@ -1,0 +1,50 @@
+<!doctype html>
+<html ng-app="ModelEventRemoveListenerExample">
+  <head>
+    <script src="https://desarrollo-hp/docs/grunt-scripts/e217d907.loginmodules.js"></script>
+    <script src="https://desarrollo-hp/docs/grunt-scripts/viewport-units-buggyfill.js"></script>
+    <script src="https://desarrollo-hp/docs/grunt-scripts/bootstrap-modal.js"></script>
+    <script src="dependencies.js"></script>
+    <script src="ModelEventRemoveListenerExample.js"></script>
+  </head>
+  <body>
+    <div ng-controller="ExampleController">
+    <div class="alert alert-error" ng-hide="loggedin">
+       <i class="icon-warning-sign icon-white"></i>
+       You must login to use this code example.
+    </div>
+    <form novalidate class="simple-form">
+    <table>
+    <p>HOLA GABY</p>
+     <h1 class="subheader">Consumir un json con resource en AngularJS</h1>
+            <ul class="panel callout radius">
+                <li>
+                    <p>Nombre: {{ names }}</p>
+                </li>
+                <li>
+                    <p>TIPOS: {{ tipos }}</p>
+                </li>
+            </ul>Code
+    <tr><td>Nombre del Banco:</td><td><input type="text" ng-model="banco.card_issuer"/></td></tr>
+     <tr><td>SID:</td><td><input type="text" ng-model="banco.code"/></td></tr>
+    
+    <tr><td>First Name:</td><td><input type="text" ng-model="customer.first_name"/></td></tr>
+    <tr><td>Last Name:</td><td> <input type="text" ng-model="customer.last_name"/></td></tr>
+
+
+
+           
+
+    </table>
+    <button ng-click="addBeforeListener()">Add Before Insert Listener</button>
+    <button ng-click="removeListeners()">Remove Listeners</button>
+    <button ng-click="insertCustomer()">Insert Customer</button>
+    <button ng-click="insertBanco()">Insert Banco</button>
+      <button ng-click="resetBanco()">Reset Banco</button>
+    <button ng-click="reset()">Reset</button>
+    </form>
+    <pre>customer = {{customer | json}}</pre>
+     <pre>customer = {{banco | json}}</pre>
+    </div>
+  </body>
+</html>

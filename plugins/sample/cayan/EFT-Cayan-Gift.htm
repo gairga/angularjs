@@ -1,0 +1,64 @@
+<form action="" name="form.mwGiftCards" id="mwGiftCards" autocomplete="off" class="form-horizontal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="row">
+        <div class="col-xs-12">
+          <h4>Cayan</h4>
+        </div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div ng-if="showScanMode"> <!-- Show DIV if the showScanMode variable is true -->
+          <h4 ng-hide="balanceMode"> <!-- Hide DIV if the balanceMode variable is true -->
+            <span data-translate="1425">Sale Amount</span>: {{saleAmount|currency}}
+          </h4>
+          <div class="form-group">
+            <div class="col-xs-4 text-right">
+              <p class="form-control-static">
+                {{cardMessage}} <!-- display cardMessage value -->
+              </p>
+            </div>
+            <div style="width:0;overflow:auto;">
+              <!-- input to contain swiped card number track data function attached to keep focus on element until swipe is complete -->
+              <input id="txtCardNumber" type="text" maxlength="600" name="txtCardNumber" bar-code ng-focuser="focusSwipe" ng-blur="doFocus();" ng-model="form.cardData"/>
+            </div>
+          </div>
+        </div>
+        <div ng-show="showKeyedMode"> <!-- Show DIV if the showKeyedMode variable is true -->
+          <h4 ng-hide="balanceMode"><span data-translate="1425">Sale Amount</span>: {{saleAmount|currency}}</h4><!-- Hide DIV if the balanceMode variable is true -->
+          <div class="form-group">
+            <label class="col-xs-4 control-label" for="txtKeyedCardNumber" data-translate="1426">
+              Card Number
+            </label>
+            <div class="col-xs-6">
+              <input id="txtKeyedCardNumber" class="form-control" type="text" placeholder="enter card number" tabindex="2" maxlength="19" autocomplete="off" name="txtKeyedCardNumber" ng-model="form.keyedCardData"/>
+            </div>
+          </div>
+          <p>{{cardMessage}}</p> <!-- display cardMessage value -->
+          <p class="text-right">
+            <button event-name="posMWGiftCardProcess" type="button" id="keyedActionButton" class="btn btn-lg btn-info" ng-click="keyedEntry()" data-translate="1427">Process</button>
+          </p>
+        </div>
+        <div class="row" ng-show="showBalance"> <!-- Show DIV if showBalance value is true -->
+          <p><span class="bold" data-translate="1428">Card Balance:</span> {{cardBalance|currency}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="container-fluid">
+        <div class="row">
+          <button id="cayanGiftCardChangeEntryMethodButton" class="btn btn-lg pull-left btn-default" type="button" ng-click="changeEntryMethod()" ng-disabled="processingHappening">
+            {{entryMethod}}
+          </button>
+          <button id="cayanPrintBalanceButton" type="button" class="btn btn-lg btn-default" ng-click="printBalance()" ng-disabled="!cardBalance" data-translate="522">
+            Cancel
+          </button>
+          <button id="cayanGiftcardBalanceCancelButton" type="button" class="btn btn-lg btn-default" ng-click="closeForm()" data-translate="1.2">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

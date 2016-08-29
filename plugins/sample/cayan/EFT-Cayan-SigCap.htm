@@ -1,0 +1,33 @@
+<form novalidate="novalidate" action="" name="mwAddTender" id="mwAddTender" class="form-horizontal">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12">
+        <h4>Cayan</h4>
+      </div>
+    </div>
+    <div ng-show="showSigCap" class="showSigCap">
+      <div class="row">
+        <div class="panel panel-default">
+          <div class="panel-heading text-center">
+            <h4 data-translate="1341">Signature required</h4>
+          </div>
+          <div class="panel-body">
+            <!-- sigpad directive inserts an HTML5 canvas element that captures and validates a drawn input -->
+            <sigpad ng-model="user.signature" clearBtn="#clearSignature" name="signature"></sigpad>
+          </div>
+          <div class="panel-footer">
+            <button type="button" id="clearSignature" class="btn btn-lg btn-primary"><span data-translate="1335">Clear</span></button>
+            <button type="button" id="acceptSignature" class="btn btn-lg btn-success pull-right" ng-disabled="!user.signature" ng-click="acceptSignature()"><span data-translate="1342">Accept</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 text-right">
+        <button id="mwAddCancelTransactionButton" type="button" class="btn btn-lg btn-default" ng-show="showSigCap" ng-click="cancelTransactionFromSignature()">
+          <span data-translate="1343">Cancel Transaction</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
